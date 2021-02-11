@@ -7,10 +7,14 @@ public class Biblio {
 
 	List<Libro> listaLibro ;
 	List<Socios> socios;
+	Libro aux;
+	Socios aux1;
 	
 	public Biblio() {
 		this.listaLibro = new LinkedList<Libro>();
 		this.socios = new LinkedList<Socios>();
+		this.aux = new Libro(null,null,0);
+		this.aux1 = new Socios(null,null,null);
 	}
 	public void addSocio(Socios p) {
 		socios.add(p); 
@@ -42,13 +46,24 @@ public class Biblio {
 		socios.get(aux2).getLibrosPrestados().add(listaLibro.get(aux).getEjemplar().remove(1));
 		
 	}
-//	public void devolLibro(Libro e, Socios s) {
-//		
-//		int aux = listaLibro.indexOf(e);
-//		int aux2 = socios.indexOf(s);
-//		listaLibro.get(aux).getEjemplar().add(socios.get(aux2).getLibrosPrestados().poll());
-//		
-//	}
+	public void devolLibro(Libro e, Socios s) {
+		
+		int aux = listaLibro.indexOf(e);
+		int aux2 = socios.indexOf(s);
+		listaLibro.get(aux).getEjemplar().add(socios.get(aux2).getLibrosPrestados().get(sacarLibro(e,s)));
+		socios.get(aux2).getLibrosPrestados().remove(sacarLibro(e,s));
+		
+	}
+	private int sacarLibro(Libro e, Socios s) {
+		
+		int aux2 = socios.indexOf(s);
+		for(int i = 0; i < socios.get(0).getCantidadMax(); i++) {
+			if(socios.get(aux2).getLibrosPrestados().get(i).getL().equals(e)) {
+				return i;
+			}
+		}
+			return 0;
+	}
 	
 	public List<Libro> getListaLibro() {
 		return listaLibro;
@@ -61,7 +76,7 @@ public class Biblio {
 	
 	@Override
 	public String toString() {
-		return "Biblio [listaLibro=" + listaLibro + ", socios=" + socios.toString() + "]";
+		return "Biblio [listaLibro=" + listaLibro.toString() + ", socios=" + socios.toString() + "]";
 	}
 	
 	

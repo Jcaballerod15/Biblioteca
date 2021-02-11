@@ -17,22 +17,13 @@ public class Libro implements Comparable<Libro>{
 			return p0.getTitulo().compareTo(p1.getTitulo());
 		}			
 	};
-	public static final Comparator COMPARE_BY_AUTOR = new Comparator<Libro>() {
-		@Override
-		public int compare(Libro p0, Libro p1) {
-			
-			return p0.getAutor().compareTo(p1.getAutor());
-		}			
-	};
+	public static final Comparator<Libro> COMPARE_BY_AUTOR = (p0,p1) -> p0.getAutor().compareTo(p1.getAutor()) ;
+	
 	public static final Comparator COMPARE_BY_NUMEJEMPLARES = new Comparator<Libro>() {
 		@Override
 		public int compare(Libro p0, Libro p1) {
-			int i = 0;
-			if(p0.getEjemplar().size() == p1.getEjemplar().size()) {
-				i=1;
-			}
-			
-			//return i;
+		
+			return p0.getEjemplar().size() - p1.getEjemplar().size();
 		}			
 	};
 

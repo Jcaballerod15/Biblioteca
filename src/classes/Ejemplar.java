@@ -34,7 +34,7 @@ public class Ejemplar {
 	}
 	@Override
 	public String toString() {
-		return "Ejemplar [ " + l + " Codigo = " + codigo + " Socio en propiedad=" +" ]";
+		return "Ejemplar [ " + l.getTitulo() + " " + l.getAutor() + " Codigo = " + codigo + "]";
 	}
 	
 }

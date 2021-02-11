@@ -23,7 +23,7 @@ public class Socios implements Comparable<Socios>{
 		@Override
 		public int compare(Socios p0, Socios p1) {
 			
-			return ;
+			return p0.getLibrosPrestados().size() - p1.getLibrosPrestados().size();
 		}			
 	};
 
