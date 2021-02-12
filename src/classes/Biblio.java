@@ -17,7 +17,7 @@ public class Biblio {
 		this.aux1 = new Socios(null,null,null);
 	}
 	public void addSocio(Socios p) {
-		socios.add(p); 
+		socios.add(new Socios (p.getNombre(),p.getApellido(),p.getDNI())); 
 	}
 	public boolean exLibro(Libro e) {
 		if(listaLibro.contains(e)) {
@@ -33,8 +33,8 @@ public class Biblio {
 			return false;
 		} 
 	}
-	public void addLibros(Libro e) {
-			listaLibro.add(e);
+	public void addLibros(Libro e) {	
+			listaLibro.add(new Libro(e.getTitulo(),e.getAutor(),e.getISBM()));
 	}
 	public void addEjemplar(Libro e,int num) {
 		e.crearAnyadirEjemplar(num);

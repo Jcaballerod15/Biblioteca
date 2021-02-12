@@ -1,5 +1,11 @@
 package main;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -30,22 +36,28 @@ public class Biblioteca {
 				System.out.println("Bye!!");
 				break;
 			case 1:
-				addBook();
+				addSocio();
 				break;
 			case 2:
-				deleteBook();
+				addBook();
 				break;
 			case 3:
-				showBook();
+				addEjemplar();
 				break;
 			case 4:
-				showBooks();
+				showBook();
 				break;
 			case 5:
-				sortBooks();
+				showSocios();
 				break;
 			case 6:
 				
+				break;
+			case 7:
+				
+				break;
+			case 8:
+				Biblioteca.guardar(this.biblioteca);
 				break;
 			default:
 				System.out.println("Opcion no valida");
@@ -55,38 +67,139 @@ public class Biblioteca {
 		} while (option != 0);
 	}
 	
-	private void crearLibroAux() {
+	private Libro crearLibroAux() {
 		this.biblioteca.getAux().setTitulo(Entrada.pedirFrase("Introduzca el titulo del Libro"));
 		this.biblioteca.getAux().setAutor(Entrada.pedirFrase("Introduzca el autor del Libro"));
 		this.biblioteca.getAux().setISBM(Entrada.pedirNum("Lo mas importente introduzca el ISBM de el Libro"));
+		return this.biblioteca.getAux();
 	}
-	private void crearSocioAux1() {
+	private Socios crearSocioAux1() {
 		this.biblioteca.getAux1().setNombre(Entrada.pedirFrase("Introduzca el nombre del socio"));
 		this.biblioteca.getAux1().setApellido(Entrada.pedirFrase("Introduzca el apellido del socio"));
 		this.biblioteca.getAux1().setDNI(Entrada.pedirFrase("Introduzca el DNI del socio"));
+		return this.biblioteca.getAux1();
 	}
-	private void sortBooks() {
+	private void showSocios() {
+		int in;
+		do {
+		System.out.println("1.Por nombre, 2.Por numero de libros prestados, 0. Exit");
+		in = Entrada.pedirNum("Selecione de que forma desea ver los Socios");
+		if (in == 1) {
+			biblioteca.getSocios().sort(Socios.COMPARE_BY_NAME);
+			System.out.println(biblioteca.getSocios());
+		}else if (in == 2) {
+			biblioteca.getSocios().sort(Socios.COMPARE_BY_TITULO);;
+			System.out.println(biblioteca.getSocios());
+		}
+		}while(in !=0 );
+	}
+
+	private void addEjemplar() {
+		Libro l = crearLibroAux();
+		if(biblioteca.exLibro(l)) {
+		int es = biblioteca.getListaLibro().indexOf(l);
+		Libro l1 = biblioteca.getListaLibro().get(es);
+		int option = Entrada.pedirNum("Introduzca el numero de ejemplares");
+		int sum =l1.getEjemplar().size() + option;
+		biblioteca.addEjemplar(l1, sum);
+		}else {
+			System.out.println("No existe el libro");
+		}
+	}
+	private void prestar() {
+		System.out.println("Introduce el socio");
+		Socios s = crearSocioAux1();
+		if(biblioteca.getSocios().contains(s)) {
+			Libro l = crearLibroAux(); 
+			biblioteca.prestarLibro(l, s);
+		}else {
+			System.out.println("La persona no esta registrado como socio");
+		}
+	}
+	private void devolucion() {
+		System.out.println("Introduce el socio");
+		Socios s = crearSocioAux1();
+		if(biblioteca.getSocios().contains(s)) {
+			Libro l = crearLibroAux(); 
+			biblioteca.devolLibro(l, s);
+		}else {
+			System.out.println("La persona no esta registrado como socio");
+		}
+	}
+
+	private void showBook(){
+		int in;
+		do {
+		System.out.println("1.Por titulo, 2. Por autor, 3.Por numero de ejemplares, 0. Exit");
+		in = Entrada.pedirNum("Selecione de que forma desea ver los Libros");
+		if (in == 1) {
+			biblioteca.getListaLibro().sort(Libro.COMPARE_BY_TITULO);
+			System.out.println(biblioteca.getListaLibro());
+		}else if (in == 2) {
+			biblioteca.getListaLibro().sort(Libro.COMPARE_BY_TITULO);
+			System.out.println(biblioteca.getListaLibro());
+		}else if (in == 3) {
+			biblioteca.getListaLibro().sort(Libro.COMPARE_BY_NUMEJEMPLARES);
+			System.out.println(biblioteca.getListaLibro());
+		}
+		}while(in !=0 );
+	}
+
+	private void addSocio() {
+		Socios p = crearSocioAux1();
+		if(biblioteca.exSocio(p)==false) {
+			biblioteca.addSocio(p);
+		}else {
+			System.out.println("el socio esta registrado de antes");
+		}
 		
+	}
+
+	private void addBook() {
+		Libro l = crearLibroAux();
+		if(biblioteca.exLibro(l)== false) {
+		int option = Entrada.pedirNum("Intrduce el numero de ejmplares que quieres introducir");
+		l.crearAnyadirEjemplar(option);
+		biblioteca.addLibros(l);
+		}else {
+			System.out.println("el libro esta registrado de antes");
+		}
 		
 	}
+	public static void guardar(Biblio b){
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("biblioteca_gg.txt"))) {
 
-	private void showBooks() {
+			oos.writeObject(b);
 
-
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	   
 	}
-
-	private void showBook() {
-
-
-	}
-
-	private void deleteBook() {
-
+	public static Biblio cargar(){
+		Biblio p = null;
 		
-	}
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("biblioteca_gg.txt"))) {
 
-	private static void addBook() {
+			p = (Biblio)ois.readObject();
+			
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
+		return p;
 	}
 
 	public static void showMenu() {
@@ -96,11 +209,14 @@ public class Biblioteca {
 		System.out.println("3. Introducir Ejemplar");
 		System.out.println("4. Mostrar Libros");
 		System.out.println("5. Mostrar Socios");
-		System.out.println("6. Guardar");
+		System.out.println("6. Prestar Libro");
+		System.out.println("7. Devolucion del Libro");
+		System.out.println("8. Guardar");
 		System.out.println("-------------------");
 		System.out.println("0. Salir");
 		System.out.println("-------------------");
 		System.out.println();
 	}
+	
 
 }
