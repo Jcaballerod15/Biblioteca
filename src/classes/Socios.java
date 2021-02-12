@@ -55,6 +55,19 @@ public class Socios implements Comparable<Socios>{
 	public void setLibrosPrestados(LinkedList<Ejemplar> librosPrestados) {
 		this.librosPrestados = librosPrestados;
 	}
+	
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+
+	public void setDNI(String dNI) {
+		DNI = dNI;
+	}
+
 	@Override
 	public String toString() {
 		return "Socios [nombre=" + nombre + ", apellido=" + apellido + ", DNI=" + DNI + "]";

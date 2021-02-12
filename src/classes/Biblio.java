@@ -73,7 +73,18 @@ public class Biblio {
 		return socios;
 	}
 	
-	
+	public Libro getAux() {
+		return aux;
+	}
+	public void setAux(Libro aux) {
+		this.aux = aux;
+	}
+	public Socios getAux1() {
+		return aux1;
+	}
+	public void setAux1(Socios aux1) {
+		this.aux1 = aux1;
+	}
 	@Override
 	public String toString() {
 		return "Biblio [listaLibro=" + listaLibro.toString() + ", socios=" + socios.toString() + "]";

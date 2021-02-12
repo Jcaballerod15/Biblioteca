@@ -68,7 +68,10 @@ public class Libro implements Comparable<Libro>{
 	public int getISBM() {
 		return ISBM;
 	}
-
+	public void setISBM(int num) {
+		this.ISBM = num;
+	}
+	
 	@Override
 	public boolean equals(Object o) {
 

@@ -4,39 +4,48 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+import classes.Biblio;
+import classes.Entrada;
 import classes.Libro;
-import classes.Lista;
 import classes.Socios;
 
 public class Biblioteca {
 
-	public static void main(String[] args) {
 
 		int option;
-		Scanner entrada = new Scanner(System.in);
+		Biblio biblioteca;
+		
+		public Biblioteca() {
+			biblioteca = new Biblio();
+			iniciar();
+		}
 
+		public void iniciar() {
 		do {
 			showMenu();
-			option = entrada.nextInt();
+			option = Entrada.pedirNum("Que desea hace, selecione un numero");
 
 			switch (option) {
 			case 0:
 				System.out.println("Bye!!");
 				break;
 			case 1:
-				addBook(libros);
+				addBook();
 				break;
 			case 2:
-				deleteBook(libros);
+				deleteBook();
 				break;
 			case 3:
-				showBook(libros);
+				showBook();
 				break;
 			case 4:
-				showBooks(libros);
+				showBooks();
 				break;
 			case 5:
-				sortBooks(libros);
+				sortBooks();
+				break;
+			case 6:
+				
 				break;
 			default:
 				System.out.println("Opcion no valida");
@@ -46,83 +55,52 @@ public class Biblioteca {
 		} while (option != 0);
 	}
 	
-	private static void sortBooks(Lista libros) {
+	private void crearLibroAux() {
+		this.biblioteca.getAux().setTitulo(Entrada.pedirFrase("Introduzca el titulo del Libro"));
+		this.biblioteca.getAux().setAutor(Entrada.pedirFrase("Introduzca el autor del Libro"));
+		this.biblioteca.getAux().setISBM(Entrada.pedirNum("Lo mas importente introduzca el ISBM de el Libro"));
+	}
+	private void crearSocioAux1() {
+		this.biblioteca.getAux1().setNombre(Entrada.pedirFrase("Introduzca el nombre del socio"));
+		this.biblioteca.getAux1().setApellido(Entrada.pedirFrase("Introduzca el apellido del socio"));
+		this.biblioteca.getAux1().setDNI(Entrada.pedirFrase("Introduzca el DNI del socio"));
+	}
+	private void sortBooks() {
 		
-		libros.sort();
-		System.out.println("Libros ordenados");
 		
 	}
 
-	private static void showBooks(Lista libros) {
+	private void showBooks() {
 
-		System.out.println(libros);
-
-	}
-
-	private static void showBook(Lista libros) {
-
-		Scanner entrada = new Scanner(System.in);
-		Libro libro;
-		String titulo;
-
-		System.out.println("Dame el titulo:");
-		titulo = entrada.nextLine();
-
-		libro = libros.getBook(titulo);
-
-		if (libro == null)
-			System.out.println("Libro no encontrado.");
-		else
-			System.out.println(libro);
 
 	}
 
-	private static void deleteBook(Lista libros) {
+	private void showBook() {
 
-		Scanner entrada = new Scanner(System.in);
-		Libro libro;
-		String titulo;
 
-		System.out.println("Dame el titulo:");
-		titulo = entrada.nextLine();
-
-		libro = new Libro(titulo);
-
-		if (libros.delete(libro))
-			System.out.println("Eliminado.");
-		else
-			System.out.println("No eliminado.");
 	}
 
-	private static void addBook(Lista libros) {
+	private void deleteBook() {
 
-		Scanner entrada = new Scanner(System.in);
-		Libro libro;
-		String titulo, autor;
+		
+	}
 
-		System.out.println("Dame el titulo:");
-		titulo = entrada.nextLine();
-		System.out.println("Dame el autor:");
-		autor = entrada.nextLine();
-
-		libro = new Libro(titulo, autor);
-
-		libros.addElementHead(libro);
-		System.out.println("Libro añadido.");
+	private static void addBook() {
+		
 	}
 
 	public static void showMenu() {
 
 		System.out.println("1. Introducir socio nuevo");
-		System.out.println("2. Eliminar Libro");
-		System.out.println("3. Buscar Libro");
+		System.out.println("2. Introducir Libro nuevo");
+		System.out.println("3. Introducir Ejemplar");
 		System.out.println("4. Mostrar Libros");
-		System.out.println("5. Ordenar Libros");
+		System.out.println("5. Mostrar Socios");
+		System.out.println("6. Guardar");
 		System.out.println("-------------------");
 		System.out.println("0. Salir");
 		System.out.println("-------------------");
 		System.out.println();
-		System.out.println("Introduzca opcion:");
 	}
 
 }
