@@ -51,13 +51,13 @@ public class Biblioteca {
 				showSocios();
 				break;
 			case 6:
-				
+				prestar();
 				break;
 			case 7:
-				
+				devolucion();
 				break;
 			case 8:
-				Biblioteca.guardar(this.biblioteca);
+				Biblioteca.guardar(this);
 				break;
 			default:
 				System.out.println("Opcion no valida");
@@ -107,13 +107,19 @@ public class Biblioteca {
 		}
 	}
 	private void prestar() {
+		
 		System.out.println("Introduce el socio");
 		Socios s = crearSocioAux1();
-		if(biblioteca.getSocios().contains(s)) {
-			Libro l = crearLibroAux(); 
-			biblioteca.prestarLibro(l, s);
+		int i = biblioteca.getSocios().indexOf(s);
+		if(biblioteca.getSocios().get(i).getLibrosPrestados().size() < biblioteca.getSocios().get(i).getCantidadMax()) {
+			if(biblioteca.getSocios().contains(s)) {
+				Libro l = crearLibroAux(); 
+				biblioteca.prestarLibro(l, s);
+			}else {
+				System.out.println("La persona no esta registrado como socio");
+			}
 		}else {
-			System.out.println("La persona no esta registrado como socio");
+			System.out.println("No se te pede prestar mas");
 		}
 	}
 	private void devolucion() {
@@ -166,7 +172,7 @@ public class Biblioteca {
 		}
 		
 	}
-	public static void guardar(Biblio b){
+	public static void guardar(Biblioteca b){
 		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("biblioteca_gg.txt"))) {
 
 			oos.writeObject(b);
@@ -180,12 +186,12 @@ public class Biblioteca {
 		}
 	   
 	}
-	public static Biblio cargar(){
-		Biblio p = null;
+	public static Biblioteca cargar(){
+		Biblioteca p = null;
 		
 		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("biblioteca_gg.txt"))) {
 
-			p = (Biblio)ois.readObject();
+			p = (Biblioteca)ois.readObject();
 			
 
 		} catch (FileNotFoundException e) {

@@ -33,8 +33,10 @@ public class Biblio {
 			return false;
 		} 
 	}
-	public void addLibros(Libro e) {	
-			listaLibro.add(new Libro(e.getTitulo(),e.getAutor(),e.getISBM()));
+	public void addLibros(Libro e) {
+			Libro l = new Libro(e.getTitulo(),e.getAutor(),e.getISBM());
+			l.crearAnyadirEjemplar(e.getEjemplar().size());
+			listaLibro.add(l);
 	}
 	public void addEjemplar(Libro e,int num) {
 		e.crearAnyadirEjemplar(num);
@@ -43,7 +45,7 @@ public class Biblio {
 		
 		int aux = listaLibro.indexOf(e);
 		int aux2 = socios.indexOf(s);
-		socios.get(aux2).getLibrosPrestados().add(listaLibro.get(aux).getEjemplar().remove(1));
+		socios.get(aux2).getLibrosPrestados().add(listaLibro.get(aux).getEjemplar().remove(0));
 		
 	}
 	public void devolLibro(Libro e, Socios s) {
