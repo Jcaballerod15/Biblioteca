@@ -1,9 +1,10 @@
 package classes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class Libro implements Comparable<Libro>{
+public class Libro implements Comparable<Libro>,Serializable{
 
 	private String titulo;
 	private String autor;

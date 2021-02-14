@@ -1,9 +1,10 @@
 package classes;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Biblio {
+public class Biblio implements Serializable {
 
 	List<Libro> listaLibro ;
 	List<Socios> socios;

@@ -1,10 +1,11 @@
 package classes;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Socios implements Comparable<Socios>{
+public class Socios implements Comparable<Socios>, Serializable{
 
 	private String nombre;
 	private String apellido;

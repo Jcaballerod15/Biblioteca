@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -15,7 +16,7 @@ import classes.Entrada;
 import classes.Libro;
 import classes.Socios;
 
-public class Biblioteca {
+public class Biblioteca implements Serializable{
 
 
 		int option;
@@ -57,7 +58,10 @@ public class Biblioteca {
 				devolucion();
 				break;
 			case 8:
-				Biblioteca.guardar(this);
+				Biblioteca.guardar(this.biblioteca);
+				break;
+			case 9:
+				biblioteca =Biblioteca.cargar();
 				break;
 			default:
 				System.out.println("Opcion no valida");
@@ -172,7 +176,7 @@ public class Biblioteca {
 		}
 		
 	}
-	public static void guardar(Biblioteca b){
+	public static void guardar(Biblio b){
 		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("biblioteca_gg.txt"))) {
 
 			oos.writeObject(b);
@@ -186,12 +190,12 @@ public class Biblioteca {
 		}
 	   
 	}
-	public static Biblioteca cargar(){
-		Biblioteca p = null;
+	public static Biblio cargar(){
+		Biblio p = null;
 		
 		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("biblioteca_gg.txt"))) {
 
-			p = (Biblioteca)ois.readObject();
+			p = (Biblio)ois.readObject();
 			
 
 		} catch (FileNotFoundException e) {
@@ -218,6 +222,7 @@ public class Biblioteca {
 		System.out.println("6. Prestar Libro");
 		System.out.println("7. Devolucion del Libro");
 		System.out.println("8. Guardar");
+		System.out.println("9. Cargar Biblioteca");
 		System.out.println("-------------------");
 		System.out.println("0. Salir");
 		System.out.println("-------------------");

@@ -1,9 +1,10 @@
 package classes;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Ejemplar {
+public class Ejemplar implements Serializable{
 
 	private int codigo;
 	private Libro l;
